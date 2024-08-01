@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: "tools-vm"
+  description: "Tools for Magalu Demo"
+  annotations:
+    github.com/project-slug: veecode-magalu/tools-vm
+spec:
+  type: devops
+  lifecycle: development
+  owner: group:default/magalu

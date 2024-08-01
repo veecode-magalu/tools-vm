@@ -1,0 +1,20 @@
+
+# Ignore terraform state files and history
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars
+*.tfvars.backup
+#.terraform.lock.hcl
+
+# Ignore terraform plan files
+*.tfplan
+
+# Ignore remote state files
+*.sav
+
+# Ignore terraform cloud workspace file
+terraform.tfstate.backup
+
+# Ignore github actions workflow state
+.github/workflows/terraform.yml.save
