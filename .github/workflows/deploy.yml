@@ -34,14 +34,14 @@ jobs:
           run: |
               echo "$SSH_PRIVATE_KEY" > private_key.pem
               chmod 600 private_key.pem
-              ssh -o StrictHostKeyChecking=no -i private_key.pem root@$PUBLIC_IP << 'EOF'
-              apt-get update
-              apt-get install -y apt-transport-https ca-certificates curl software-properties-common
+              ssh -o StrictHostKeyChecking=no -i private_key.pem ubuntu@$PUBLIC_IP << 'EOF'
+              sudo apt-get update
+              sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common
               curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
-              add-apt-repository 'deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable'
-              apt-get update
-              apt-get install -y docker-ce
-              systemctl start docker
-              systemctl enable docker
+              sudo add-apt-repository 'deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable'
+              sudo apt-get update
+              sudo apt-get install -y docker-ce
+              sudo systemctl start docker
+              sudo systemctl enable docker
               # Add more commands as needed
               EOF
