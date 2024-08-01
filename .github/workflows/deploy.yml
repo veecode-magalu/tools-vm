@@ -46,5 +46,9 @@ jobs:
               sudo systemctl start docker
               sudo systemctl enable docker
               sudo usermod -aG docker ubuntu
+              curl https://get-vkdr.vee.codes | bash
+              vkdr init
+              vkdr infra start --http 80 --https 443
+              vkdr kong install --default-ic -d tools-vm.mgc.vee.codes
               # Add more commands as needed
               EOF

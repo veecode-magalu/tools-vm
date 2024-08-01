@@ -13,7 +13,8 @@ variable "vm_name" {
 variable "vm_size" {
   description = "Virtual machine size"
   type        = string
-  default     = "cloud-bs1.xsmall"
+  default     = "cloud-gp1.medium"
+#  default     = "cloud-bs1.xsmall"
 }
 
 variable "vm_image" {
