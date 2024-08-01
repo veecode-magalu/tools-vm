@@ -1,0 +1,46 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+
+jobs:
+  destroy:
+    runs-on: ubuntu-latest
+
+    steps:
+        - name: Checkout repository
+          uses: actions/checkout@v3
+    
+        - name: Set up Terraform
+          uses: hashicorp/setup-terraform@v2
+          with:
+            terraform_version: 1.9.3
+            cli_config_credentials_token: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}
+    
+        - name: Terraform Init
+          run: terraform init
+
+        - name: Extract Terraform output
+          id: tf-output
+          run: |
+            PUBLIC_IP=$(terraform output -raw public_ip)
+            echo "::set-output name=public_ip::$PUBLIC_IP"
+        
+        - name: Install Docker on VM
+          env:
+              PUBLIC_IP: ${{ steps.tf-output.outputs.public_ip }}
+              SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          run: |
+              echo "$SSH_PRIVATE_KEY" > private_key.pem
+              chmod 600 private_key.pem
+              ssh -o StrictHostKeyChecking=no -i private_key.pem root@$PUBLIC_IP << 'EOF'
+              apt-get update
+              apt-get install -y apt-transport-https ca-certificates curl software-properties-common
+              curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+              add-apt-repository 'deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable'
+              apt-get update
+              apt-get install -y docker-ce
+              systemctl start docker
+              systemctl enable docker
+              # Add more commands as needed
+              EOF
