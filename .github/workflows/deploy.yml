@@ -16,6 +16,7 @@ jobs:
           with:
             terraform_version: 1.9.3
             cli_config_credentials_token: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}
+            terraform_wrapper: false
     
         - name: Terraform Init
           run: terraform init
