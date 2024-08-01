@@ -5,7 +5,7 @@ metadata:
   description: "Tools for Magalu Demo"
   annotations:
     github.com/project-slug: veecode-magalu/tools-vm
-    github.com/workflows: terraform.yml,destroy.yml
+    github.com/workflows: terraform.yml,deploy.yml,destroy.yml
 spec:
   type: devops
   lifecycle: development
